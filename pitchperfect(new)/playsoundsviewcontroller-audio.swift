@@ -10,7 +10,7 @@ import AVFoundation
 
 // MARK: - PlaySoundsViewController: AVAudioPlayerDelegate
 
-extension PlaySoundsViewController: AVAudioPlayerDelegate {
+extension playSoundsViewController: AVAudioPlayerDelegate {
     
     // MARK: Alerts
     
@@ -36,7 +36,7 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
     func setupAudio() {
         // initialize (recording) audio file
         do {
-            audioFile = try AVAudioFile(forReading: recordedAudioURL as URL)
+            audioFile = try AVAudioFile(forReading: recordedAudioURL as URL) //load audiofile stored in memory
         } catch {
             showAlert(Alerts.AudioFileError, message: String(describing: error))
         }        
@@ -53,10 +53,10 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         
         // node for adjusting rate/pitch
         let changeRatePitchNode = AVAudioUnitTimePitch()
-        if let pitch = pitch {
+        if let pitch = pitch { //if variable pitch isnt nill then execute this code
             changeRatePitchNode.pitch = pitch
         }
-        if let rate = rate {
+        if let rate = rate { //if variable rate isnt nill then execute this code
             changeRatePitchNode.rate = rate
         }
         audioEngine.attach(changeRatePitchNode)
@@ -99,7 +99,7 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
             }
             
             // schedule a stop timer for when audio finishes playing
-            self.stopTimer = Timer(timeInterval: delayInSeconds, target: self, selector: #selector(PlaySoundsViewController.stopAudio), userInfo: nil, repeats: false)
+            self.stopTimer = Timer(timeInterval: delayInSeconds, target: self, selector: #selector(playSoundsViewController.stopAudio), userInfo: nil, repeats: false)
             RunLoop.main.add(self.stopTimer!, forMode: RunLoopMode.defaultRunLoopMode)
         }
         
